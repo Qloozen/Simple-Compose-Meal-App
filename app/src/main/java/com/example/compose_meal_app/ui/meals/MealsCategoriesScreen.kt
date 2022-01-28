@@ -23,18 +23,18 @@ import com.example.compose_meal_app.model.reponse.MealCategory
 import com.example.compose_meal_app.ui.theme.ComposeMealAppTheme
 
 @Composable
-fun MealsCategoriesScreen() {
+fun MealsCategoriesScreen(navigationCallBack: (String) -> Unit) {
     val viewModel: MealsCategoriesViewModel = viewModel()
     val meals = viewModel.mealsState
     LazyColumn(contentPadding = PaddingValues(16.dp)) {
         items(meals.value) { meal ->
-            MealCategory(meal = meal)
+            MealCategory(meal = meal, navigationCallBack)
         }
     }
 }
 
 @Composable
-fun MealCategory(meal: MealCategory) {
+fun MealCategory(meal: MealCategory,navigationCallBack: (String) -> Unit) {
     var isExpanded by remember { mutableStateOf(false) }
     Card(
         shape = RoundedCornerShape(8.dp),
@@ -42,6 +42,9 @@ fun MealCategory(meal: MealCategory) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 16.dp)
+            .clickable {
+                navigationCallBack(meal.id)
+            }
     ) {
         Row(modifier = Modifier.animateContentSize()) {
             // Basic
@@ -89,6 +92,6 @@ fun MealCategory(meal: MealCategory) {
 @Composable
 fun DefaultPreview() {
     ComposeMealAppTheme {
-        MealsCategoriesScreen()
+        MealsCategoriesScreen({})
     }
 }

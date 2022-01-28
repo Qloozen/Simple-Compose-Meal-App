@@ -10,7 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 // ViewModel holds the list state, so the UI listens to the ViewModel when changes are made. Changes will recompose
-class MealsCategoriesViewModel (private val repository: MealsRepository = MealsRepository()): ViewModel() {
+class MealsCategoriesViewModel (private val repository: MealsRepository = MealsRepository.getInstance()): ViewModel() {
 
     init {
         // This is a coroutine, for handling async tasks. ViewModelScope will keep the coroutine alive as long as the ViewModel
